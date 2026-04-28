@@ -1,16 +1,18 @@
 version: '3.9'
 services:
-  localstack:
-    image: localstack/localstack:3
+  ministack:
+    image: ministackorg/ministack
     ports:
       - '4566:4566'
     environment:
-      SERVICES: dynamodb,sqs,s3,ses
-      DEFAULT_REGION: us-east-1
-      PERSISTENCE: 1
+      MINISTACK_REGION: us-east-1
+      PERSIST_STATE: 1
+      S3_PERSIST: 1
+      STATE_DIR: /data/ministack-state
+      S3_DATA_DIR: /data/s3
     volumes:
-      - ./scripts/localstack-init.sh:/etc/localstack/init/ready.d/init.sh
-      - localstack-data:/var/lib/localstack
+      - ./scripts/ministack-init.sh:/etc/localstack/init/ready.d/init.sh
+      - ministack-data:/data
 
 volumes:
-  localstack-data:
+  ministack-data:

@@ -580,7 +580,7 @@ NOTA SOBRE BUNDLE SIZE:
 TESTE DE INTEGRAÇÃO LOCAL (src/index.local.ts):
   Script para rodar o worker localmente sem SQS:
   - Lê um evento SQS mockado de fixtures/sqs-event.json
-  - Usa LocalStack ou mocks de repositório via env LOCAL=true
+  - Usa MiniStack ou mocks de repositório via env LOCAL=true
   - Útil para testar geração de PDF localmente
 ```
 
@@ -944,23 +944,24 @@ fixtures/
    - Use helpers padLeft, padRight, zerofill
 
 4. scripts/seed-local.ts
-   Script para popular DynamoDB local (LocalStack) com:
+   Script para popular DynamoDB local (MiniStack) com:
    - 2 templates de exemplo (financial-report, transactions)
    - 1 job de exemplo em status PENDING
 
 ARQUIVO: docker-compose.yml
-  Para desenvolvimento local com LocalStack:
+  Para desenvolvimento local com MiniStack:
   services:
-    localstack:
-      image: localstack/localstack:3
+    ministack:
+      image: ministackorg/ministack
       ports: ['4566:4566']
       environment:
-        SERVICES: dynamodb,sqs,s3,ses
-        DEFAULT_REGION: us-east-1
+        MINISTACK_REGION: us-east-1
+        PERSIST_STATE: 1
+        S3_PERSIST: 1
       volumes:
-        - ./scripts/localstack-init.sh:/etc/localstack/init/ready.d/init.sh
+        - ./scripts/ministack-init.sh:/etc/localstack/init/ready.d/init.sh
   
-  ARQUIVO: scripts/localstack-init.sh
+  ARQUIVO: scripts/ministack-init.sh
     Cria todos os recursos AWS localmente (tabelas DDB, filas SQS, buckets S3)
 ```
 
@@ -984,7 +985,7 @@ Seções:
    - Permissões AWS necessárias para deploy
 
 3. Desenvolvimento Local
-   - docker-compose up (LocalStack)
+   - docker-compose up (MiniStack)
    - npm run seed:local
    - Como rodar um worker localmente:
      LOCAL=true node --require ts-node/register packages/workers/csv-worker/src/index.local.ts

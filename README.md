@@ -27,7 +27,7 @@ Internal Service → ALB interno → ECS Fargate (NestJS REST API)
 - Node.js 20+, npm 10+
 - AWS CLI v2 configurado
 - AWS CDK v2: `npm install -g aws-cdk`
-- Docker (para desenvolvimento local com LocalStack)
+- Docker (para desenvolvimento local com MiniStack)
 
 ## Desenvolvimento Local
 
@@ -35,7 +35,7 @@ Internal Service → ALB interno → ECS Fargate (NestJS REST API)
 # 1. Instalar dependências
 npm install
 
-# 2. Subir LocalStack
+# 2. Subir MiniStack
 docker-compose up -d
 
 # 3. Seeder de templates
@@ -72,7 +72,7 @@ src/
 infra/              ← CDK stacks (Core, Storage, Handler/ECS, Workers, Observability)
 Dockerfile          ← Multi-stage build da API NestJS (Alpine + non-root)
 fixtures/           ← Templates de exemplo para desenvolvimento local
-scripts/            ← seed-local.ts, localstack-init.sh
+scripts/            ← seed-local.ts, ministack-init.sh
 ```
 
 ### Adicionar novo formato de relatório
