@@ -1,0 +1,30 @@
+{
+  "jobId": "01ABCDEFGH1234567890ABCDE",
+  "tenantId": "tenant-001",
+  "userId": "user-001",
+  "format": "PDF",
+  "templateId": "financial-report",
+  "templateVersion": "v1",
+  "params": {
+    "reportTitle": "Relatório Financeiro Mensal",
+    "period": "Abril/2026",
+    "generatedAt": "2026-04-26T10:00:00Z",
+    "tenantName": "Acme Corp",
+    "transactions": [
+      { "date": "2026-04-01", "description": "Venda de produto A", "value": 1500.00, "status": "Confirmado" },
+      { "date": "2026-04-02", "description": "Compra de insumos", "value": -300.50, "status": "Confirmado" }
+    ],
+    "totalRevenue": 1500.00,
+    "totalExpense": 300.50,
+    "balance": 1199.50
+  },
+  "paramsHash": "abc123",
+  "dedupHash": "def456",
+  "status": "PENDING",
+  "recipientEmail": "user@example.com",
+  "recipientName": "João Silva",
+  "locale": "pt-BR",
+  "createdAt": "2026-04-26T10:00:00Z",
+  "updatedAt": "2026-04-26T10:00:00Z",
+  "expiresAt": 1753492800
+}

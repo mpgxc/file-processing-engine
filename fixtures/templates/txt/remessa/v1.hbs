@@ -1,0 +1,6 @@
+{{!-- CNAB 240 simplified header --}}
+{{padLeft tenantCode 3}}{{padRight tenantName 30}}{{zerofill fileSequence 6}}{{formatDate generatedAt 'DDMMYYYY'}}{{formatDate generatedAt}}
+{{#each payments}}
+P {{padRight recipientName 30}}{{zerofill document 14}}{{formatCurrency amount}}{{padLeft status 10}}
+{{/each}}
+T {{zerofill totalRecords 6}}{{formatCurrency totalAmount}}

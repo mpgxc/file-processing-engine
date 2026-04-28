@@ -1,0 +1,35 @@
+{{!-- subject: Seu relatório está pronto --}}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Relatório Pronto</title>
+<style>
+  body{font-family:Arial,sans-serif;background:#f4f4f4;margin:0;padding:20px}
+  .container{max-width:600px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden}
+  .header{background:#1a56db;color:#fff;padding:24px;text-align:center}
+  .body{padding:32px}
+  .btn{display:inline-block;background:#1a56db;color:#fff;padding:14px 28px;border-radius:6px;text-decoration:none;font-weight:bold;margin:16px 0}
+  .info{background:#f8f9fa;border-radius:6px;padding:16px;margin:16px 0;font-size:14px;color:#555}
+  .footer{text-align:center;padding:16px;font-size:12px;color:#aaa}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header"><h1>Relatório Pronto</h1></div>
+  <div class="body">
+    <p>Olá, <strong>{{recipientName}}</strong>!</p>
+    <p>Seu relatório <strong>{{reportTitle}}</strong> (formato {{format}}) foi gerado com sucesso e está disponível para download.</p>
+    <div style="text-align:center">
+      <a href="{{downloadUrl}}" class="btn">Baixar Relatório</a>
+    </div>
+    <div class="info">
+      <strong>Link válido até:</strong> {{expiresAtFormatted}}<br/>
+      <strong>Job ID:</strong> {{jobId}}
+    </div>
+  </div>
+  <div class="footer">&copy; {{currentYear}} — Gerado automaticamente. Não responda este email.</div>
+</div>
+</body>
+</html>

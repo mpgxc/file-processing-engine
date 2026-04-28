@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<style>
+  @page { size: A4; margin: 20mm; }
+  body { font-family: Arial, sans-serif; font-size: 12px; color: #333; }
+  h1 { color: #1a56db; border-bottom: 2px solid #1a56db; padding-bottom: 8px; }
+  .header-info { display: flex; justify-content: space-between; margin-bottom: 20px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+  th { background: #1a56db; color: #fff; padding: 8px; text-align: left; }
+  td { padding: 6px 8px; border-bottom: 1px solid #eee; }
+  tr:nth-child(even) { background: #f8f9fa; }
+  .totals { margin-top: 20px; text-align: right; }
+  .footer { position: fixed; bottom: 10mm; width: 100%; text-align: center; font-size: 10px; color: #aaa; }
+</style>
+</head>
+<body>
+<div class="footer">{{tenantName}} — Gerado em {{generatedAt}} — Página <span class="pageNumber"></span></div>
+<h1>{{reportTitle}}</h1>
+<div class="header-info">
+  <div><strong>Empresa:</strong> {{tenantName}}</div>
+  <div><strong>Período:</strong> {{period}}</div>
+  <div><strong>Gerado em:</strong> {{generatedAt}}</div>
+</div>
+<table>
+  <thead>
+    <tr>
+      <th>Data</th><th>Descrição</th><th>Valor (R$)</th><th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each transactions}}
+    <tr>
+      <td>{{formatDate date}}</td>
+      <td>{{description}}</td>
+      <td>{{formatCurrency value}}</td>
+      <td>{{status}}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+<div class="totals">
+  <p><strong>Receita Total:</strong> R$ {{formatCurrency totalRevenue}}</p>
+  <p><strong>Despesa Total:</strong> R$ {{formatCurrency totalExpense}}</p>
+  <p><strong>Saldo:</strong> R$ {{formatCurrency balance}}</p>
+</div>
+</body>
+</html>

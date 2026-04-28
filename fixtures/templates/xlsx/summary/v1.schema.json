@@ -1,0 +1,21 @@
+{
+  "sheets": [
+    {
+      "name": "Resumo",
+      "namedRanges": [
+        { "name": "ReportTitle", "dataKey": "reportTitle" },
+        { "name": "Period", "dataKey": "period" },
+        { "name": "TenantName", "dataKey": "tenantName" },
+        { "name": "TotalRevenue", "dataKey": "totalRevenue" },
+        { "name": "TotalExpense", "dataKey": "totalExpense" },
+        { "name": "Balance", "dataKey": "balance" }
+      ]
+    },
+    {
+      "name": "Transações",
+      "namedRanges": [
+        { "name": "TransactionsData", "dataKey": "transactions" }
+      ]
+    }
+  ]
+}

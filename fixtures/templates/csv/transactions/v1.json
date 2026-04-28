@@ -1,0 +1,11 @@
+{
+  "columns": [
+    { "key": "date", "header": "Data", "format": "date" },
+    { "key": "description", "header": "Descrição" },
+    { "key": "amount", "header": "Valor", "format": "currency" },
+    { "key": "status", "header": "Status" },
+    { "key": "externalNsu", "header": "NSU Externo" }
+  ],
+  "delimiter": ";",
+  "bom": true
+}

@@ -1,0 +1,16 @@
+version: '3.9'
+services:
+  localstack:
+    image: localstack/localstack:3
+    ports:
+      - '4566:4566'
+    environment:
+      SERVICES: dynamodb,sqs,s3,ses
+      DEFAULT_REGION: us-east-1
+      PERSISTENCE: 1
+    volumes:
+      - ./scripts/localstack-init.sh:/etc/localstack/init/ready.d/init.sh
+      - localstack-data:/var/lib/localstack
+
+volumes:
+  localstack-data:

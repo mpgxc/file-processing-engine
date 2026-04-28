@@ -1,0 +1,23 @@
+{
+  "jobId": "01BCDEFGHI2345678901BCDEF",
+  "tenantId": "tenant-001",
+  "userId": "user-001",
+  "format": "CSV",
+  "templateId": "transactions",
+  "templateVersion": "v1",
+  "params": {
+    "rows": [
+      { "date": "2026-04-01", "description": "Venda A", "amount": 1500.00, "status": "OK", "externalNsu": "NSU001" },
+      { "date": "2026-04-02", "description": "Venda B", "amount": 2300.00, "status": "OK", "externalNsu": "NSU002" }
+    ]
+  },
+  "paramsHash": "xyz789",
+  "dedupHash": "uvw123",
+  "status": "PENDING",
+  "recipientEmail": "user@example.com",
+  "recipientName": "Maria Santos",
+  "locale": "pt-BR",
+  "createdAt": "2026-04-26T10:00:00Z",
+  "updatedAt": "2026-04-26T10:00:00Z",
+  "expiresAt": 1753492800
+}
