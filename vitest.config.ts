@@ -19,7 +19,7 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       include: ['src/**/*.ts'],
-      exclude: ['src/**/*.spec.ts', 'src/main.ts', 'src/workers/*.ts'],
+      exclude: ['src/**/*.spec.ts', 'src/main.ts', 'src/workers/handlers/*.ts'],
       thresholds: {
         global: { branches: 70, functions: 70, lines: 70, statements: 70 },
       },
@@ -28,6 +28,11 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': new URL('./src', import.meta.url).pathname,
+      '@/core': new URL('./src/core', import.meta.url).pathname,
+      '@/commons': new URL('./src/commons', import.meta.url).pathname,
+      '@/features': new URL('./src/features', import.meta.url).pathname,
+      '@/engines': new URL('./src/engines', import.meta.url).pathname,
+      '@/workers': new URL('./src/workers', import.meta.url).pathname,
     },
   },
 });

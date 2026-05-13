@@ -1,0 +1,4 @@
+export const REPOSITORY_TOKENS = {
+  JOB: 'JOB_REPOSITORY',
+  TEMPLATE: 'TEMPLATE_REPOSITORY',
+} as const;

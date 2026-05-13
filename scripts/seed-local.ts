@@ -1,6 +1,6 @@
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { DynamoDBDocumentClient, PutCommand } from '@aws-sdk/lib-dynamodb';
-import { ReportFormat, JobStatus } from '../src/shared/types/job.types.js';
+import { ReportFormat } from '../src/commons/types/job.types.js';
 
 const client = DynamoDBDocumentClient.from(
   new DynamoDBClient({ endpoint: 'http://localhost:4566', region: 'us-east-1' }),

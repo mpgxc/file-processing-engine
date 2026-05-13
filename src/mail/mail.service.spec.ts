@@ -2,11 +2,9 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { vol } from 'memfs';
 import { Test } from '@nestjs/testing';
 import { MailService } from './mail.service.js';
-import { SesMailer } from '../shared/clients/ses.client.js';
-import { ConfigService } from '../config/config.service.js';
-import { ReportFormat } from '../shared/types/job.types.js';
-
-
+import { SesMailer } from '../commons/clients/ses.client.js';
+import { ConfigService } from '../core/config/config.service.js';
+import { ReportFormat } from '../commons/types/job.types.js';
 
 vi.mock('node:fs', async () => {
   const { fs } = await import('memfs');
@@ -64,13 +62,13 @@ describe('MailService', () => {
 
     await service.sendReportReady(baseParams);
 
-    expect(sesMailer.send).toHaveBeenCalledWith(
-      expect.objectContaining({
-        to: 'user@example.com',
-        subject: 'Relatório Pronto',
-        htmlBody: expect.stringContaining('João'),
-      }),
-    );
+    const sendArg = sesMailer.send.mock.calls[0]?.[0] as
+      | { to: string; subject: string; htmlBody: string }
+      | undefined;
+    expect(sendArg).toBeDefined();
+    expect(sendArg?.to).toBe('user@example.com');
+    expect(sendArg?.subject).toBe('Relatório Pronto');
+    expect(sendArg?.htmlBody).toContain('João');
   });
 
   it('falls back to built-in template when mount unavailable', async () => {

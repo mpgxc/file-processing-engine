@@ -2,9 +2,9 @@
 
 ## Arquitetura
 
-- **API REST** (`src/main.ts`, `src/reports/`, `src/health/`) → roda em **ECS Fargate** (Docker), não Lambda. Build com `nest build` + `Dockerfile`.
-- **Workers** (`src/workers/*-worker.ts`) → 4 **Lambda functions** disparadas por SQS, com mount EFS em `/mnt/templates` e `/mnt/outputs`. Build com esbuild (`npm run build:lambdas`).
-- O código compartilhado (`src/shared/`, `src/engines/`, `src/mail/`, `src/config/`) é usado pelos dois.
+- **API REST** (`src/main.ts`, `src/core/`, `src/features/reporting/`, `src/features/health/`) → roda em **ECS Fargate** (Docker), não Lambda. Build com `nest build` + `Dockerfile`.
+- **Workers** (`src/workers/handlers/*.worker.ts`) → 4 **Lambda functions** disparadas por SQS, com mount EFS em `/mnt/templates` e `/mnt/outputs`. Build com esbuild (`npm run build:lambdas`).
+- **Camadas compartilhadas**: `src/commons/` (tipos, erros, utils, clients), `src/engines/`, `src/mail/`.
 
 ## Fluxo de desenvolvimento
 
@@ -30,7 +30,10 @@ npm run test:watch    # watch mode
 
 ## Convenções de código
 
-- Arquivos: `kebab-case.ts`
+- Arquivos: `kebab-case` com sufixo semântico:
+  - `*.module.ts`, `*.service.ts`, `*.controller.ts`
+  - `*.repository.ts`, `*.worker.ts`, `*.handler.ts`
+  - `*.types.ts`, `*.errors.ts`
 - Classes/interfaces: `PascalCase`
 - Funções/variáveis: `camelCase`
 - Sem `any` — erros sempre tipados
@@ -39,11 +42,11 @@ npm run test:watch    # watch mode
 
 ## Como adicionar novo formato de relatório
 
-1. `src/shared/types/job.types.ts` → adicionar no enum `ReportFormat`
-2. `src/engines/{formato}.engine.ts` → implementar `IReportEngine`
+1. `src/commons/types/job.types.ts` → adicionar no enum `ReportFormat`
+2. `src/engines/{formato}/{formato}.engine.ts` → implementar `IReportEngine`
 3. `src/engines/engines.module.ts` → registrar o engine
-4. `src/config/config.service.ts` → adicionar `sqsNovoQueueUrl` no schema
-5. `src/workers/{formato}-worker.ts` → entry point mínimo
+4. `src/core/config/config.service.ts` → adicionar `sqsNovoQueueUrl` no schema
+5. `src/workers/handlers/{formato}.worker.ts` → entry point mínimo
 6. `package.json` → adicionar script `build:lambda:{formato}`
 7. `infra/lib/workers-stack.ts` → adicionar no `WORKER_CONFIGS`
 8. `infra/lib/core-stack.ts` → adicionar fila SQS + DLQ

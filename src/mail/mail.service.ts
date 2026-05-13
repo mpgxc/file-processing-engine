@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import Handlebars from 'handlebars';
-import { SesMailer } from '../shared/clients/ses.client.js';
-import { ReportFormat } from '../shared/types/job.types.js';
-import { ConfigService } from '../config/config.service.js';
+import { SesMailer } from '../commons/clients/ses.client.js';
+import { ReportFormat } from '../commons/types/job.types.js';
+import { ConfigService } from '../core/config/config.service.js';
 
 export interface SendReportReadyParams {
   to: string;

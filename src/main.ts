@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module.js';
-import { applyLocalConfig } from './config/local.config.js';
+import { AppModule } from './core/app.module.js';
+import { applyLocalConfig } from './core/config/local.config.js';
 
 if (process.env['LOCAL'] === 'true') {
   applyLocalConfig();

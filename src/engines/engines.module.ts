@@ -1,9 +1,9 @@
 import { Injectable, Module, OnModuleInit } from '@nestjs/common';
-import { PdfEngine } from './pdf.engine.js';
-import { CsvEngine } from './csv.engine.js';
-import { XlsxEngine } from './xlsx.engine.js';
-import { TxtEngine } from './txt.engine.js';
-import { EngineRegistry } from './engine.registry.js';
+import { PdfEngine } from './pdf/pdf.engine.js';
+import { CsvEngine } from './csv/csv.engine.js';
+import { XlsxEngine } from './xlsx/xlsx.engine.js';
+import { TxtEngine } from './txt/txt.engine.js';
+import { EngineRegistry } from './core/engine.registry.js';
 
 @Injectable()
 class EngineRegistrar implements OnModuleInit {

@@ -260,39 +260,37 @@ LOCAL=true JWT_SECRET=dev-secret npm run start:dev
 
 ```
 src/
-  config/           ← ConfigService (Zod-validated env vars)
-  engines/          ← Strategy pattern: IReportEngine + PDF/CSV/XLSX/TXT
-  mail/             ← MailService com Handlebars + SES
-  reports/          ← Controller + Service (REST API ECS)
-  health/           ← /health endpoint para ALB target group
-  auth/             ← JwtMiddleware (jose)
-  workers/          ← BaseWorker + factory para os 4 workers SQS
-  shared/
-    types/          ← Interfaces TypeScript (ReportJob, ReportTemplate, etc.)
-    errors/         ← Hierarquia de AppError
-    utils/          ← hash.ts (SHA-256), ulid.ts
-    clients/        ← DynamoDB, SQS, S3, SES singletons
-    repositories/   ← IJobRepository, ITemplateRepository
-  observability/    ← Lambda Powertools singletons (Logger, Tracer, Metrics)
-  main.ts           ← Entry point do servidor NestJS (ECS Fargate)
+  core/             ← Config, Auth, Exception Filter, Observability, AppModule
+  commons/          ← Types, Errors, Utils, AWS Clients compartilhados
+  features/
+    reporting/      ← API de relatórios + repositórios + orquestração
+    health/         ← Endpoint /health para target group do ALB
+  engines/          ← Strategy pattern por formato (core + pdf/csv/xlsx/txt)
   workers/
-    pdf-worker.ts   ← Entry point Lambda SQS PDF (1536MB / 5min)
-    csv-worker.ts   ← Entry point Lambda SQS CSV (512MB / 3min)
-    xlsx-worker.ts  ← Entry point Lambda SQS XLSX (1024MB / 3min)
-    txt-worker.ts   ← Entry point Lambda SQS TXT (256MB / 30s)
+    core/           ← BaseWorker + WorkerApp factory
+    handlers/       ← Entry points Lambda SQS por formato
+  mail/             ← MailService com Handlebars + SES
+  main.ts           ← Entry point do servidor NestJS (ECS Fargate)
 infra/              ← CDK stacks (Core, Storage, Handler/ECS, Workers, Observability)
 Dockerfile          ← Multi-stage build da API NestJS (Alpine + non-root)
 fixtures/           ← Templates de exemplo para desenvolvimento local
 scripts/            ← seed-local.ts, ministack-init.sh
 ```
 
+### Convenção de nomes de arquivos
+
+- `kebab-case` com sufixo semântico:
+  - `*.module.ts`, `*.service.ts`, `*.controller.ts`
+  - `*.repository.ts`, `*.worker.ts`, `*.handler.ts`
+  - `*.types.ts`, `*.errors.ts`
+
 ### Adicionar novo formato de relatório
 
-1. Adicionar `NOVO_FORMATO` em `src/shared/types/job.types.ts` (enum ReportFormat)
-2. Criar `src/engines/novo.engine.ts` implementando `IReportEngine`
+1. Adicionar `NOVO_FORMATO` em `src/commons/types/job.types.ts` (enum ReportFormat)
+2. Criar `src/engines/{formato}/{formato}.engine.ts` implementando `IReportEngine`
 3. Registrar no `src/engines/engines.module.ts`
-4. Adicionar `SQS_NOVO_QUEUE_URL` no schema do `ConfigService`
-5. Criar `src/workers/novo-worker.ts` e adicionar build script no `package.json`
+4. Adicionar `SQS_NOVO_QUEUE_URL` no schema do `ConfigService` em `src/core/config/config.service.ts`
+5. Criar `src/workers/handlers/{formato}.worker.ts` e adicionar build script no `package.json`
 6. Adicionar fila + worker no CDK `WorkersStack`
 
 ## API
