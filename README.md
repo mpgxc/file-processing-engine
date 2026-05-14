@@ -243,18 +243,47 @@ graph TB
 ## Desenvolvimento Local
 
 ```bash
-# 1. Instalar dependências
+# 1. Instalar dependências e criar perfil local
 npm install
+cp .env.local.example .env.local
 
-# 2. Subir MiniStack
-docker-compose up -d
+# 2. Subir + validar MiniStack + seed + sync de templates no S3 local
+npm run local:up
 
-# 3. Seeder de templates
-npm run seed:local
-
-# 4. Subir servidor NestJS local
-LOCAL=true JWT_SECRET=dev-secret npm run start:dev
+# 3. Rodar API + workers locais (simulação de Lambda SQS)
+npm run local:dev
 ```
+
+### Fluxo E2E local (DoD)
+
+```bash
+# gerar token JWT local (HS256 com JWT_SECRET da .env.local)
+TOKEN="<seu-token>"
+
+curl -X POST http://localhost:3000/reports/generate \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "format":"PDF",
+    "templateId":"financial-report",
+    "params":{"reportTitle":"Teste local"},
+    "recipientEmail":"user@dev.local",
+    "recipientName":"Usuário Local",
+    "locale":"pt-BR"
+  }'
+```
+
+O worker local consome da SQS, processa o job e persiste status/artefato. Para encerrar:
+
+```bash
+npm run local:down
+```
+
+### Limites de paridade local vs produção
+
+- **Simulado localmente com MiniStack**: DynamoDB, SQS, S3, SES.
+- **Executado localmente como equivalente**: API (processo Node), workers (pollers SQS simulando Lambda), mounts por pastas locais (`./fixtures/templates` e `./fixtures/outputs`).
+- **Não simulado 1:1**: ECS, ALB e EFS gerenciados AWS (substituídos por processos locais e filesystem local).
 
 ## Estrutura do Projeto
 
@@ -274,7 +303,7 @@ src/
 infra/              ← CDK stacks (Core, Storage, Handler/ECS, Workers, Observability)
 Dockerfile          ← Multi-stage build da API NestJS (Alpine + non-root)
 fixtures/           ← Templates de exemplo para desenvolvimento local
-scripts/            ← seed-local.ts, ministack-init.sh
+scripts/            ← bootstrap-local.ts, start-local-workers.ts, seed-local.ts, ministack-init.sh
 ```
 
 ### Convenção de nomes de arquivos
@@ -376,7 +405,23 @@ cdk deploy --all
 
 ## Variáveis de Ambiente
 
-Veja `.env.example` para a lista completa.
+Veja `.env.example` (geral) e `.env.local.example` (MiniStack local).
+
+## Troubleshooting local
+
+```bash
+# reset completo MiniStack + volumes + bootstrap
+npm run local:reset
+
+# inspecionar filas locais
+aws --endpoint-url http://localhost:4566 sqs list-queues
+
+# inspecionar tabelas locais
+aws --endpoint-url http://localhost:4566 dynamodb list-tables
+
+# inspecionar objetos no bucket de saída local
+aws --endpoint-url http://localhost:4566 s3 ls s3://report-service-outputs-local --recursive
+```
 
 ## Testes
 

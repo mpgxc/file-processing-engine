@@ -24,7 +24,13 @@
     "test:watch": "vitest",
     "test:cov": "vitest run --coverage",
     "seed:local": "tsx scripts/seed-local.ts",
-    "start:local": "dotenv -e .env.local -- cross-env LOCAL=true tsx watch src/main.ts"
+    "start:local": "dotenv -e .env.local -- cross-env LOCAL=true tsx watch src/main.ts",
+    "start:workers:local": "dotenv -e .env.local -- cross-env LOCAL=true tsx scripts/start-local-workers.ts",
+    "bootstrap:local": "dotenv -e .env.local -- tsx scripts/bootstrap-local.ts",
+    "local:up": "npm run bootstrap:local",
+    "local:dev": "dotenv -e .env.local -- cross-env LOCAL=true tsx scripts/local-dev.ts",
+    "local:down": "docker compose down",
+    "local:reset": "docker compose down -v && npm run local:up"
   },
   "dependencies": {
     "@aws-lambda-powertools/logger": "^2.15.0",

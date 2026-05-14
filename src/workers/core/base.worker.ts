@@ -11,7 +11,10 @@ import { IJobRepository } from '../../features/reporting/repositories/job.reposi
 import { ITemplateRepository } from '../../features/reporting/repositories/template.repository.js';
 import { REPOSITORY_TOKENS } from '../../features/reporting/repositories/repository-tokens.js';
 import { MailService } from '../../mail/mail.service.js';
-import { generatePresignedUrl } from '../../commons/clients/s3.client.js';
+import {
+  generatePresignedUrl,
+  uploadFileToOutputBucket,
+} from '../../commons/clients/s3.client.js';
 import { JobStatus } from '../../commons/types/job.types.js';
 import { ReportJobMessage } from '../../commons/types/sqs.types.js';
 import { MountNotAvailableError } from '../../commons/errors/app-errors.js';
@@ -64,6 +67,7 @@ export class BaseWorker {
 
       const ext = getExtension(job.format);
       const s3Key = `${job.tenantId}/${job.userId}/${job.dedupHash}.${ext}`;
+      await uploadFileToOutputBucket(s3Key, outputPath);
       const downloadUrl = await generatePresignedUrl(s3Key);
 
       await this.mailService.sendReportReady({

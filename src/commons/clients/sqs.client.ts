@@ -6,7 +6,9 @@ let sqsClient: SQSClient | null = null;
 
 function getSqsClient(): SQSClient {
   if (sqsClient) return sqsClient;
-  sqsClient = new SQSClient({});
+  const endpoint = process.env['AWS_SQS_ENDPOINT'] ?? process.env['AWS_ENDPOINT_URL'];
+  const region = process.env['AWS_REGION'] ?? 'us-east-1';
+  sqsClient = new SQSClient(endpoint ? { endpoint, region } : { region });
   return sqsClient;
 }
 
@@ -30,12 +32,17 @@ export class SqsPublisher {
     queueUrl: string,
     message: ReportJobMessage,
   ): Promise<{ messageId: string }> {
+    const isFifoQueue = queueUrl.endsWith('.fifo');
     const result = await this.client.send(
       new SendMessageCommand({
         QueueUrl: queueUrl,
         MessageBody: JSON.stringify(message),
-        MessageGroupId: message.dedupHash,
-        MessageDeduplicationId: message.dedupHash,
+        ...(isFifoQueue
+          ? {
+              MessageGroupId: message.dedupHash,
+              MessageDeduplicationId: message.dedupHash,
+            }
+          : {}),
       }),
     );
     return { messageId: result.MessageId ?? '' };
