@@ -1,10 +1,10 @@
 import { z } from 'zod';
-import { ReportFormat } from '../../../../commons/types/job.types.js';
+import { ReportFormat } from '../../../../commons/types/job.types';
 
 export const GenerateReportSchema = z.object({
   format: z.nativeEnum(ReportFormat),
   templateId: z.string().min(1),
-  params: z.record(z.unknown()),
+  params: z.record(z.string(), z.unknown()),
   recipientEmail: z.string().email(),
   recipientName: z.string().min(1),
   locale: z.string().optional().default('pt-BR'),
