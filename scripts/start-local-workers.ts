@@ -1,15 +1,20 @@
 import 'reflect-metadata';
-import { ReceiveMessageCommand, DeleteMessageCommand, SQSClient } from '@aws-sdk/client-sqs';
+import {
+  ReceiveMessageCommand,
+  DeleteMessageCommand,
+  SQSClient,
+} from '@aws-sdk/client-sqs';
 import type { Context, SQSEvent, SQSRecord } from 'aws-lambda';
-import { createWorkerHandler } from '../src/workers/core/worker-handler.factory.js';
-import { applyLocalConfig } from '../src/core/config/local.config.js';
+import { createWorkerHandler } from '../src/workers/core/worker-handler.factory';
+import { applyLocalConfig } from '../src/core/config/local.config';
 
 if (process.env['LOCAL'] === 'true') {
   applyLocalConfig();
 }
 
 const region = process.env['AWS_REGION'] ?? 'us-east-1';
-const endpoint = process.env['AWS_SQS_ENDPOINT'] ?? process.env['AWS_ENDPOINT_URL'];
+const endpoint =
+  process.env['AWS_SQS_ENDPOINT'] ?? process.env['AWS_ENDPOINT_URL'];
 
 const sqs = new SQSClient(endpoint ? { endpoint, region } : { region });
 
@@ -54,17 +59,19 @@ async function consume(format: string, queueUrl: string): Promise<void> {
       if (messages.length === 0) continue;
 
       const event: SQSEvent = {
-        Records: messages.map((message): SQSRecord => ({
-          messageId: message.MessageId ?? '',
-          receiptHandle: message.ReceiptHandle ?? '',
-          body: message.Body ?? '',
-          attributes: message.Attributes ?? {},
-          messageAttributes: {},
-          md5OfBody: message.MD5OfBody ?? '',
-          eventSource: 'aws:sqs',
-          eventSourceARN: '',
-          awsRegion: region,
-        })),
+        Records: messages.map(
+          (message): SQSRecord => ({
+            messageId: message.MessageId ?? '',
+            receiptHandle: message.ReceiptHandle ?? '',
+            body: message.Body ?? '',
+            attributes: message.Attributes ?? {},
+            messageAttributes: {},
+            md5OfBody: message.MD5OfBody ?? '',
+            eventSource: 'aws:sqs',
+            eventSourceARN: '',
+            awsRegion: region,
+          }),
+        ),
       };
 
       await handler(event, workerContext, () => undefined);
