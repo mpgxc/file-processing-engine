@@ -1,17 +1,17 @@
 import { NestFactory } from '@nestjs/core';
 import type { SQSEvent, SQSHandler, Context } from 'aws-lambda';
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '../../core/config/config.module.js';
-import { EnginesModule } from '../../engines/engines.module.js';
-import { MailModule } from '../../mail/mail.module.js';
-import { ReportingModule } from '../../features/reporting/reporting.module.js';
-import { BaseWorker } from './base.worker.js';
+import { ConfigModule } from '../../core/config/config.module';
+import { EnginesModule } from '../../engines/engines.module';
+import { MailModule } from '../../mail/mail.module';
+import { ReportingModule } from '../../features/reporting/reporting.module';
+import { BaseWorker } from './base.worker';
 import {
   logger,
   tracer,
   metrics,
   MetricUnit,
-} from '../../core/observability/powertools.js';
+} from '../../core/observability/powertools';
 
 @Module({
   imports: [ConfigModule, EnginesModule, MailModule, ReportingModule],

@@ -1,24 +1,24 @@
 import { Injectable, Inject } from '@nestjs/common';
 import type { SQSRecord } from 'aws-lambda';
 import { existsSync } from 'node:fs';
-import { EngineRegistry } from '../../engines/core/engine.registry.js';
+import { EngineRegistry } from '../../engines/core/engine.registry';
 import {
   resolveTemplatePath,
   resolveOutputPath,
   getExtension,
-} from '../../engines/core/engine.interface.js';
-import { IJobRepository } from '../../features/reporting/repositories/job.repository.js';
-import { ITemplateRepository } from '../../features/reporting/repositories/template.repository.js';
-import { REPOSITORY_TOKENS } from '../../features/reporting/repositories/repository-tokens.js';
-import { MailService } from '../../mail/mail.service.js';
+} from '../../engines/core/engine.interface';
+import { IJobRepository } from '../../features/reporting/repositories/job.repository';
+import { ITemplateRepository } from '../../features/reporting/repositories/template.repository';
+import { REPOSITORY_TOKENS } from '../../features/reporting/repositories/repository-tokens';
+import { MailService } from '../../mail/mail.service';
 import {
   generatePresignedUrl,
   uploadFileToOutputBucket,
-} from '../../commons/clients/s3.client.js';
-import { JobStatus } from '../../commons/types/job.types.js';
-import { ReportJobMessage } from '../../commons/types/sqs.types.js';
-import { MountNotAvailableError } from '../../commons/errors/app-errors.js';
-import { ConfigService } from '../../core/config/config.service.js';
+} from '../../commons/clients/s3.client';
+import { JobStatus } from '../../commons/types/job.types';
+import { ReportJobMessage } from '../../commons/types/sqs.types';
+import { MountNotAvailableError } from '../../commons/errors/app-errors';
+import { ConfigService } from '../../core/config/config.service';
 
 @Injectable()
 export class BaseWorker {

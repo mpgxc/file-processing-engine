@@ -4,8 +4,8 @@ import {
   QueryCommand,
   UpdateCommand,
 } from '@aws-sdk/lib-dynamodb';
-import { getDynamoDbClient } from '../../../commons/clients/dynamodb.client.js';
-import { ReportJob, JobStatus } from '../../../commons/types/job.types.js';
+import { getDynamoDbClient } from '../../../commons/clients/dynamodb.client';
+import { ReportJob, JobStatus } from '../../../commons/types/job.types';
 
 export interface IJobRepository {
   create(job: ReportJob): Promise<void>;

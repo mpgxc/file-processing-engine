@@ -1,10 +1,7 @@
-import {
-  EngineContext,
-  EngineResult,
-} from '../../commons/types/engine.types.js';
-import { ReportFormat } from '../../commons/types/job.types.js';
-import { ReportTemplate } from '../../commons/types/template.types.js';
-import { ReportJob } from '../../commons/types/job.types.js';
+import { EngineContext, EngineResult } from '../../commons/types/engine.types';
+import { ReportFormat } from '../../commons/types/job.types';
+import { ReportTemplate } from '../../commons/types/template.types';
+import { ReportJob } from '../../commons/types/job.types';
 
 export interface IReportEngine {
   readonly format: ReportFormat;

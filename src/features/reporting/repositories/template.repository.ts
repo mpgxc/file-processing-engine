@@ -1,6 +1,6 @@
 import { GetCommand, QueryCommand } from '@aws-sdk/lib-dynamodb';
-import { getDynamoDbClient } from '../../../commons/clients/dynamodb.client.js';
-import { ReportTemplate } from '../../../commons/types/template.types.js';
+import { getDynamoDbClient } from '../../../commons/clients/dynamodb.client';
+import { ReportTemplate } from '../../../commons/types/template.types';
 
 export interface ITemplateRepository {
   findById(

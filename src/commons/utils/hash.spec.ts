@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { computeParamsHash, computeDedupHash } from './hash.js';
+import { computeParamsHash, computeDedupHash } from './hash';
 
 describe('computeParamsHash', () => {
   it('is deterministic with same input', () => {

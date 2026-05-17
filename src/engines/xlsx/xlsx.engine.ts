@@ -2,13 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { readFileSync, mkdirSync, statSync } from 'node:fs';
 import { dirname } from 'node:path';
 import ExcelJS from 'exceljs';
-import { IReportEngine } from '../core/engine.interface.js';
-import {
-  EngineContext,
-  EngineResult,
-} from '../../commons/types/engine.types.js';
-import { ReportFormat } from '../../commons/types/job.types.js';
-import { EngineError } from '../../commons/errors/app-errors.js';
+import { IReportEngine } from '../core/engine.interface';
+import { EngineContext, EngineResult } from '../../commons/types/engine.types';
+import { ReportFormat } from '../../commons/types/job.types';
+import { EngineError } from '../../commons/errors/app-errors';
 
 interface NamedRange {
   name: string;

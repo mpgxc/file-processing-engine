@@ -1,8 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Test } from '@nestjs/testing';
-import { ReportsService } from './reports.service.js';
-import { JobStatus, ReportFormat } from '../../../commons/types/job.types.js';
-import { REPOSITORY_TOKENS } from '../repositories/repository-tokens.js';
+import { ReportsService } from './reports.service';
+import { JobStatus, ReportFormat } from '../../../commons/types/job.types';
+import { REPOSITORY_TOKENS } from '../repositories/repository-tokens';
 
 vi.mock('../../../commons/clients/sqs.client.js', () => ({
   SqsPublisher: vi.fn().mockImplementation(() => ({

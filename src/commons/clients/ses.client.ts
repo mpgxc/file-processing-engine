@@ -4,7 +4,8 @@ let sesClient: SESClient | null = null;
 
 function getSesClient(): SESClient {
   if (sesClient) return sesClient;
-  const endpoint = process.env['AWS_SES_ENDPOINT'] ?? process.env['AWS_ENDPOINT_URL'];
+  const endpoint =
+    process.env['AWS_SES_ENDPOINT'] ?? process.env['AWS_ENDPOINT_URL'];
   const region = process.env['AWS_REGION'] ?? 'us-east-1';
   sesClient = new SESClient(endpoint ? { endpoint, region } : { region });
   return sesClient;

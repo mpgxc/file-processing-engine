@@ -5,7 +5,7 @@ import {
   HttpException,
 } from '@nestjs/common';
 import { Response } from 'express';
-import { AppError, ValidationError } from '../../commons/errors/app-errors.js';
+import { AppError, ValidationError } from '../../commons/errors/app-errors';
 
 @Catch()
 export class AppExceptionFilter implements ExceptionFilter {

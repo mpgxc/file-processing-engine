@@ -1,29 +1,29 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { metrics, MetricUnit } from '../../../core/observability/powertools.js';
-import { IJobRepository } from '../repositories/job.repository.js';
-import { ITemplateRepository } from '../repositories/template.repository.js';
+import { metrics, MetricUnit } from '../../../core/observability/powertools';
+import { IJobRepository } from '../repositories/job.repository';
+import { ITemplateRepository } from '../repositories/template.repository';
 import {
   SqsPublisher,
   resolveQueueUrl,
-} from '../../../commons/clients/sqs.client.js';
-import { generatePresignedUrl } from '../../../commons/clients/s3.client.js';
+} from '../../../commons/clients/sqs.client';
+import { generatePresignedUrl } from '../../../commons/clients/s3.client';
 import {
   computeParamsHash,
   computeDedupHash,
-} from '../../../commons/utils/hash.js';
-import { ulid } from '../../../commons/utils/ulid.js';
+} from '../../../commons/utils/hash';
+import { ulid } from '../../../commons/utils/ulid';
 import {
   JobNotFoundError,
   TemplateNotFoundError,
-} from '../../../commons/errors/app-errors.js';
-import { JobStatus, ReportJob } from '../../../commons/types/job.types.js';
+} from '../../../commons/errors/app-errors';
+import { JobStatus, ReportJob } from '../../../commons/types/job.types';
 import {
   GenerateReportCacheHit,
   GenerateReportResponse,
   JobStatusResponse,
-} from '../../../commons/types/api.types.js';
-import { GenerateReportDto } from './dto/generate-report.dto.js';
-import { REPOSITORY_TOKENS } from '../repositories/repository-tokens.js';
+} from '../../../commons/types/api.types';
+import { GenerateReportDto } from './dto/generate-report.dto';
+import { REPOSITORY_TOKENS } from '../repositories/repository-tokens';
 
 @Injectable()
 export class ReportsService {

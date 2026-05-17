@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { BaseWorker } from './core/base.worker.js';
-import { EnginesModule } from '../engines/engines.module.js';
-import { MailModule } from '../mail/mail.module.js';
-import { ReportingModule } from '../features/reporting/reporting.module.js';
+import { BaseWorker } from './core/base.worker';
+import { EnginesModule } from '../engines/engines.module';
+import { MailModule } from '../mail/mail.module';
+import { ReportingModule } from '../features/reporting/reporting.module';
 
 @Module({
   imports: [EnginesModule, MailModule, ReportingModule],

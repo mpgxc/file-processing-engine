@@ -1,5 +1,5 @@
-import { ReportJob } from './job.types.js';
-import { ReportTemplate } from './template.types.js';
+import { ReportJob } from './job.types';
+import { ReportTemplate } from './template.types';
 
 export interface EngineContext {
   job: ReportJob;

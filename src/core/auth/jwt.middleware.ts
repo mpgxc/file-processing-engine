@@ -1,7 +1,7 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import { jwtVerify, createRemoteJWKSet } from 'jose';
-import { UnauthorizedError } from '../../commons/errors/app-errors.js';
+import { UnauthorizedError } from '../../commons/errors/app-errors';
 
 @Injectable()
 export class JwtMiddleware implements NestMiddleware {

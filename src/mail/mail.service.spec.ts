@@ -1,10 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { vol } from 'memfs';
 import { Test } from '@nestjs/testing';
-import { MailService } from './mail.service.js';
-import { SesMailer } from '../commons/clients/ses.client.js';
-import { ConfigService } from '../core/config/config.service.js';
-import { ReportFormat } from '../commons/types/job.types.js';
+import { MailService } from './mail.service';
+import { SesMailer } from '../commons/clients/ses.client';
+import { ConfigService } from '../core/config/config.service';
+import { ReportFormat } from '../commons/types/job.types';
 
 vi.mock('node:fs', async () => {
   const { fs } = await import('memfs');

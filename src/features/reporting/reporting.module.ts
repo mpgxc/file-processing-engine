@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { ReportsController } from './reports/reports.controller.js';
-import { ReportsService } from './reports/reports.service.js';
-import { DynamoDbJobRepository } from './repositories/job.repository.js';
-import { DynamoDbTemplateRepository } from './repositories/template.repository.js';
-import { REPOSITORY_TOKENS } from './repositories/repository-tokens.js';
+import { ReportsController } from './reports/reports.controller';
+import { ReportsService } from './reports/reports.service';
+import { DynamoDbJobRepository } from './repositories/job.repository';
+import { DynamoDbTemplateRepository } from './repositories/template.repository';
+import { REPOSITORY_TOKENS } from './repositories/repository-tokens';
 
 @Module({
   controllers: [ReportsController],

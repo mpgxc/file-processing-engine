@@ -1,4 +1,4 @@
-import { JobStatus, ReportFormat } from './job.types.js';
+import { JobStatus, ReportFormat } from './job.types';
 
 export interface GenerateReportRequest {
   format: ReportFormat;

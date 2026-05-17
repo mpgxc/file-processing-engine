@@ -1,11 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Test } from '@nestjs/testing';
-import { BaseWorker } from './base.worker.js';
-import { EngineRegistry } from '../../engines/core/engine.registry.js';
-import { REPOSITORY_TOKENS } from '../../features/reporting/repositories/repository-tokens.js';
-import { MailService } from '../../mail/mail.service.js';
-import { ConfigService } from '../../core/config/config.service.js';
-import { JobStatus, ReportFormat } from '../../commons/types/job.types.js';
+import { BaseWorker } from './base.worker';
+import { EngineRegistry } from '../../engines/core/engine.registry';
+import { REPOSITORY_TOKENS } from '../../features/reporting/repositories/repository-tokens';
+import { MailService } from '../../mail/mail.service';
+import { ConfigService } from '../../core/config/config.service';
+import { JobStatus, ReportFormat } from '../../commons/types/job.types';
 import type { SQSRecord } from 'aws-lambda';
 
 vi.mock('node:fs', () => ({

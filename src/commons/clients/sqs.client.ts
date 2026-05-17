@@ -1,12 +1,13 @@
 import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs';
-import { ReportFormat } from '../types/job.types.js';
-import { ReportJobMessage } from '../types/sqs.types.js';
+import { ReportFormat } from '../types/job.types';
+import { ReportJobMessage } from '../types/sqs.types';
 
 let sqsClient: SQSClient | null = null;
 
 function getSqsClient(): SQSClient {
   if (sqsClient) return sqsClient;
-  const endpoint = process.env['AWS_SQS_ENDPOINT'] ?? process.env['AWS_ENDPOINT_URL'];
+  const endpoint =
+    process.env['AWS_SQS_ENDPOINT'] ?? process.env['AWS_ENDPOINT_URL'];
   const region = process.env['AWS_REGION'] ?? 'us-east-1';
   sqsClient = new SQSClient(endpoint ? { endpoint, region } : { region });
   return sqsClient;

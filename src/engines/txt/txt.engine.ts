@@ -2,13 +2,10 @@ import { Injectable } from '@nestjs/common';
 import Handlebars from 'handlebars';
 import { mkdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { dirname } from 'node:path';
-import { EngineError } from '../../commons/errors/app-errors.js';
-import {
-  EngineContext,
-  EngineResult,
-} from '../../commons/types/engine.types.js';
-import { ReportFormat } from '../../commons/types/job.types.js';
-import { IReportEngine } from '../core/engine.interface.js';
+import { EngineError } from '../../commons/errors/app-errors';
+import { EngineContext, EngineResult } from '../../commons/types/engine.types';
+import { ReportFormat } from '../../commons/types/job.types';
+import { IReportEngine } from '../core/engine.interface';
 
 function toSafeString(value: unknown): string {
   if (typeof value === 'string') return value;

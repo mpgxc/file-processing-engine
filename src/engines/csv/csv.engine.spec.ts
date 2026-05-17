@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { vol } from 'memfs';
-import { CsvEngine } from './csv.engine.js';
-import { ReportFormat, JobStatus } from '../../commons/types/job.types.js';
-import type { EngineContext } from '../../commons/types/engine.types.js';
+import { CsvEngine } from './csv.engine';
+import { ReportFormat, JobStatus } from '../../commons/types/job.types';
+import type { EngineContext } from '../../commons/types/engine.types';
 
 vi.mock('node:fs', async () => {
   const { fs } = await import('memfs');

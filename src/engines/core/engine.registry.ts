@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { IReportEngine } from './engine.interface.js';
-import { ReportFormat } from '../../commons/types/job.types.js';
-import { EngineError } from '../../commons/errors/app-errors.js';
+import { IReportEngine } from './engine.interface';
+import { ReportFormat } from '../../commons/types/job.types';
+import { EngineError } from '../../commons/errors/app-errors';
 
 @Injectable()
 export class EngineRegistry {
