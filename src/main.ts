@@ -1,15 +1,33 @@
-import 'reflect-metadata';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './core/app.module.js';
-import { applyLocalConfig } from './core/config/local.config.js';
+import {
+  FastifyAdapter,
+  NestFastifyApplication,
+} from '@nestjs/platform-fastify';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { AppModule } from './core/app.module';
+import { applyLocalConfig } from './core/config/local.config';
 
 if (process.env['LOCAL'] === 'true') {
   applyLocalConfig();
 }
 
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  await app.listen(process.env['PORT'] ?? 3000);
-}
+(async () => {
+  const app = await NestFactory.create<NestFastifyApplication>(
+    AppModule,
+    new FastifyAdapter(),
+  );
 
-bootstrap().catch(console.error);
+  if (process.env['LOCAL'] === 'true') {
+    const config = new DocumentBuilder()
+      .setTitle('Report Service API')
+      .setDescription('Report generation — PDF, CSV, XLSX, TXT')
+      .setVersion('1.0')
+      .addBearerAuth()
+      .build();
+
+    const document = SwaggerModule.createDocument(app, config);
+    SwaggerModule.setup('api/docs', app, document);
+  }
+
+  await app.listen(process.env.PORT ?? 3000);
+})();
